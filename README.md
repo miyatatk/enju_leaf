@@ -9,6 +9,28 @@ StudyLib is intended for managing study-room and home collection materials, incl
 StudyLib は、書籍、雑誌、資料、電子化資料、CD等のメディアを含む、書斎・自宅資料コレクション管理向けのカスタマイズ版です。
 
 
+## Optional customizations / 任意カスタマイズ
+
+### StudyLib item identifier format / StudyLib 所蔵情報ID形式
+
+The `studylib/item-identifier` branch adds a local item identifier format for StudyLib:
+
+- `Ayyyy-mmdd-nnnc`
+- automatic normalization
+- date validation
+- UPC-A / JAN-style check digit correction
+
+This branch is optional and is intended for users who want to adopt the StudyLib item identifier convention.
+
+`studylib/item-identifier` ブランチでは、StudyLib 用のローカル所蔵情報ID形式を追加しています。
+
+- `Ayyyy-mmdd-nnnc`
+- 入力値の自動正規化
+- 日付部分の妥当性検証
+- UPC-A / JAN 方式に準じたチェックデジット補正
+
+このブランチは任意です。StudyLib の所蔵情報ID命名規則を採用したい場合のみ利用してください。
+
 ---
 
 
