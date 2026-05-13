@@ -31,15 +31,41 @@ class Item < ApplicationRecord
   accepts_nested_attributes_for :item_custom_values, reject_if: :all_blank
 
   scope :accepted_between, lambda { |from, to| includes(:accept).where("items.created_at BETWEEN ? AND ?", Time.zone.parse(from).beginning_of_day, Time.zone.parse(to).end_of_day) }
+
+  # StudyLib item identifier:
+  #   Ayyyy-mmdd-nnnc
+  #   yyyy: year
+  #   mmdd: month and day
+  #   nnn : serial number
+  #   c   : UPC-A / JAN-style check digit
+  #
+  # Accepted inputs:
+  #   Ayyyy-mmdd-nnnc
+  #   Ayyyy-mmdd-nnn
+  #   yyyy-mmdd-nnn
+  #   yyyymmddnnn
+  #
+  # Values are normalized before validation and saved as:
+  #   Ayyyy-mmdd-nnnc
+  #
+  # If the date part is invalid, the value is not normalized and validation fails.
+  # If the check digit is missing or wrong, it is calculated and corrected.
+  STUDYLIB_ITEM_IDENTIFIER_FORMAT = /\AA\d{4}-\d{4}-\d{4}\z/
+
   validates :item_identifier, allow_blank: true, uniqueness: true,
-    format: { with: /\A[0-9A-Za-z_]+\Z/ }
+    format: { with: STUDYLIB_ITEM_IDENTIFIER_FORMAT }
   validates :binding_item_identifier, allow_blank: true,
-    format: { with: /\A[0-9A-Za-z_]+\Z/ }
+    format: { with: STUDYLIB_ITEM_IDENTIFIER_FORMAT }
+
+  validate :validate_studylib_item_identifier_values
+
   validates :url, url: true, allow_blank: true, length: { maximum: 255 }
   validates :acquired_at, date: true, allow_blank: true
 
   strip_attributes only: [ :item_identifier, :binding_item_identifier,
     :call_number, :binding_call_number, :url ]
+
+  before_validation :normalize_studylib_item_identifiers
 
   searchable do
     text :item_identifier, :note, :title, :creator, :contributor, :publisher,
@@ -148,6 +174,66 @@ class Item < ApplicationRecord
     end
 
     record
+  end
+
+  private
+
+  def normalize_studylib_item_identifiers
+    self.item_identifier = normalize_studylib_item_identifier(item_identifier)
+    self.binding_item_identifier = normalize_studylib_item_identifier(binding_item_identifier)
+  end
+
+  def normalize_studylib_item_identifier(value)
+    return value if value.blank?
+
+    raw = value.to_s.strip.upcase
+    digits = raw.delete_prefix("A").delete("-")
+
+    return raw unless digits.match?(/\A\d{11,12}\z/)
+
+    base_digits = digits[0, 11]
+
+    return raw unless studylib_item_identifier_date_valid?(base_digits)
+
+    check_digit = studylib_check_digit(base_digits)
+
+    "A#{base_digits[0, 4]}-#{base_digits[4, 4]}-#{base_digits[8, 3]}#{check_digit}"
+  end
+
+  def validate_studylib_item_identifier_values
+    validate_studylib_item_identifier_value(:item_identifier)
+    validate_studylib_item_identifier_value(:binding_item_identifier)
+  end
+
+  def validate_studylib_item_identifier_value(attribute)
+    value = public_send(attribute)
+    return if value.blank?
+
+    return unless value.match?(STUDYLIB_ITEM_IDENTIFIER_FORMAT)
+
+    digits = value.delete_prefix("A").delete("-")
+    base_digits = digits[0, 11]
+
+    unless studylib_item_identifier_date_valid?(base_digits)
+      errors.add(attribute, :invalid)
+    end
+  end
+
+  def studylib_item_identifier_date_valid?(base_digits)
+    year = base_digits[0, 4].to_i
+    month = base_digits[4, 2].to_i
+    day = base_digits[6, 2].to_i
+
+    Date.valid_date?(year, month, day)
+  end
+
+  def studylib_check_digit(base_digits)
+    digits = base_digits.chars.map(&:to_i)
+
+    odd_sum = digits.values_at(0, 2, 4, 6, 8, 10).sum
+    even_sum = digits.values_at(1, 3, 5, 7, 9).sum
+
+    ((10 - ((odd_sum * 3 + even_sum) % 10)) % 10).to_s
   end
 end
 
