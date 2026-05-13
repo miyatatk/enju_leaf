@@ -1,3 +1,17 @@
+# Enju Leaf StudyLib Custom
+
+This repository is a StudyLib custom fork of [Next-L Enju Leaf](https://github.com/next-l/enju_leaf), based on Next-L Enju Leaf v1.6.0.
+
+StudyLib is intended for managing study-room and home collection materials, including books, journals, documents, digitized materials, CDs, and other media.
+
+このリポジトリは、[Next-L Enju Leaf](https://github.com/next-l/enju_leaf) v1.6.0 をベースにした StudyLib カスタムフォークです。
+
+StudyLib は、書籍、雑誌、資料、電子化資料、CD等のメディアを含む、書斎・自宅資料コレクション管理向けのカスタマイズ版です。
+
+
+---
+
+
 # Next-L Enju Leaf
 [![Ruby on Rails CI](https://github.com/next-l/enju_leaf/actions/workflows/rubyonrails.yml/badge.svg)](https://github.com/next-l/enju_leaf/actions/workflows/rubyonrails.yml)
 [![Code Coverage](https://qlty.sh/gh/next-l/projects/enju_leaf/coverage.svg)](https://qlty.sh/gh/next-l/projects/enju_leaf)
