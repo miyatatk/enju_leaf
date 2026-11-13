@@ -4,12 +4,72 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+
+# -----------------------------------------------------------------------------
+# Bundler / Ruby
+# -----------------------------------------------------------------------------
+
 # Ignore bundler config.
 /.bundle
+
+# Ruby / Rails local tooling
+/.ruby-lsp/
+/.solargraph.yml
+
+
+# -----------------------------------------------------------------------------
+# Rails credentials / secrets
+# -----------------------------------------------------------------------------
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# Ignore Rails credentials keys.
+/config/*.key
+/config/credentials/*.key
+
+
+# -----------------------------------------------------------------------------
+# Environment files
+# -----------------------------------------------------------------------------
+
+# Main local environment file
+/.env
+
+# Local environment variants
+/.env.local
+/.env.development
+/.env.production
+/.env.*.local
+
+# Local Docker / Compose environment variants
+/.env.docker
+/.env.localdocker
+
+# direnv
+/.envrc
+
+
+# -----------------------------------------------------------------------------
+# Databases / dumps / backups
+# -----------------------------------------------------------------------------
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
+
+# Local database dumps and backups
+/db/*.dump
+/db/*.sql
+/db/*.backup
+/*.dump
+/*.sql
+/*.backup
+
+
+# -----------------------------------------------------------------------------
+# Logs / temp files / coverage
+# -----------------------------------------------------------------------------
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -17,29 +77,74 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore uploaded files in development
+# Test coverage
+/coverage/*
+
+
+# -----------------------------------------------------------------------------
+# Uploaded / generated files
+# -----------------------------------------------------------------------------
+
+# Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
 
-/node_modules
-/yarn-error.log
+# Private local files
+/private/*
 
+# Generated public files
 /public/assets
-.byebug_history
-
-# Ignore master key for decrypting credentials and more.
-/config/master.key
-
+/public/packs
+/public/packs-test
 /public/resourcelist*.xml
 /public/changelist*.xml
 
-/.env
-/coverage/*
-/private/*
 
-/public/packs
-/public/packs-test
+# -----------------------------------------------------------------------------
+# JavaScript / Node / Yarn
+# -----------------------------------------------------------------------------
+
 /node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+
+# -----------------------------------------------------------------------------
+# Docker / Compose local overrides
+# -----------------------------------------------------------------------------
+
+# Local-only Docker Compose override
+/docker-compose.override.yml
+
+# Local-only overrides such as local icons, local bind mounts, and private assets
+/local/
+
+
+# -----------------------------------------------------------------------------
+# Nginx / local certificates
+# -----------------------------------------------------------------------------
+
+# Local nginx certificates
+/nginx/certs/*
+!/nginx/certs/.keep
+
+
+# -----------------------------------------------------------------------------
+# Editor / IDE / OS local files
+# -----------------------------------------------------------------------------
+
+# Debugger history
+.byebug_history
+
+# VS Code / JetBrains local settings
+/.vscode/
+.idea/
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Vim / temporary editor files
+*.swp
+*~
