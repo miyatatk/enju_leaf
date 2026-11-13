@@ -62,7 +62,8 @@ RUN apt-get update -qq && apt-get install --no-install-recommends -y curl gnupg 
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /enju /enju
+#COPY --from=build /enju /enju
+COPY --chown=${UID}:${GID} --from=build /enju /enju
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --gid ${GID} enju && \
