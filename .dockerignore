@@ -9,3 +9,9 @@ brakeman.html
 /coverage/
 /private/
 /config/master.key
+
+# StudyLib: exclude local persistent data and secrets
+/storage/
+/.git
+/.env.*
+/nginx/certs/
