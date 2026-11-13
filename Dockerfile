@@ -67,6 +67,7 @@ COPY --from=build /enju /enju
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --gid ${GID} enju && \
     useradd enju --uid ${UID} --gid ${GID} --create-home --shell /bin/bash && \
+    mkdir -p storage && \
     chown -R enju:enju db log storage tmp
 USER enju:enju
 
