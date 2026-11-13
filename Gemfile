@@ -2,7 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.3"
+gem "rails", "~> 7.2.4"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -111,6 +111,8 @@ gem 'webpacker', '~> 5.0'
 gem 'faraday-multipart'
 gem 'nkf'
 gem 'benchmark'
+gem 'icalendar'
+gem "json", "~> 2.21"
 
 group :development, :test do
   gem 'annotaterb'
