@@ -16,7 +16,7 @@
             （<%= @google_books_key_configured ? t("studylib.settings.configured") : t("studylib.settings.not_configured") %>）
             <br/>
             <%= password_field_tag "settings[google_books_api_key]", nil,
-                  id: "google_books_api_key", autocomplete: "new-password", size: 48 %>
+                  id: "google_books_api_key", autocomplete: "new-password", size: 40 %>
             <p><%= t("studylib.settings.key_help") %></p>
 
             <% if @google_books_key_configured %>
