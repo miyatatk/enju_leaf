@@ -12,7 +12,7 @@
       <ul>
         <li>
           <%= form_with scope: :settings, url: studylib_settings_path, method: :patch, local: true do %>
-            <%= label_tag "google_books_api_key", t("studylib.settings.google_books_api_key") %>
+            <%= label_tag "google_books_api_key", t("studylib.settings.google_books_api_key"), style: "font-weight: normal" %>
             （<%= @google_books_key_configured ? t("studylib.settings.configured") : t("studylib.settings.not_configured") %>）
             <br/>
             <%= password_field_tag "settings[google_books_api_key]", nil,
