@@ -155,7 +155,7 @@ Rails.application.routes.draw do
   end
 
   namespace :studylib do
-    resource :settings, only: :show
+    resource :settings, only: [ :show, :update ]
   end
 
   devise_for :users
