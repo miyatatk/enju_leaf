@@ -2,7 +2,6 @@ ja:
   studylib:
     settings:
       title: "StudyLib拡張設定"
-      introduction: "StudyLib独自機能の設定を管理します。"
       cover_image: "書影取得設定"
       cover_image_pending: "Google Books APIキー、取得元の優先順位、フォールバック、キャッシュの設定は今後この画面に追加します。現時点では、この画面から変更できません。"
       current_setting: "現在の書影取得元は、従来のシステム全体の設定で管理されています。"
@@ -12,7 +11,6 @@ en:
   studylib:
     settings:
       title: "StudyLib extension settings"
-      introduction: "Manage settings for StudyLib-specific features."
       cover_image: "Cover image settings"
       cover_image_pending: "Google Books API key, source priority, fallback, and cache settings will be added here. They cannot yet be changed on this page."
       current_setting: "The current cover image source is still managed in the existing system-wide settings."
