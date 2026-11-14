@@ -1,38 +1,38 @@
-<div id="content_detail" class="ui-corner-all ui-widget-content">
-  <h1 class="title"><%= t("studylib.settings.title") %></h1>
-
-  <div id="content_list">
-    <p id="notice"><%= notice %></p>
-    <% if alert.present? %>
-      <p role="alert"><%= alert %></p>
-    <% end %>
-
-    <h2><%= t("studylib.settings.cover_image") %></h2>
-
-    <%= form_with scope: :settings, url: studylib_settings_path, method: :patch, local: true do %>
-      <div class="field">
-        <%= label_tag "google_books_api_key", t("studylib.settings.google_books_api_key") %><br/>
-        <strong><%= @google_books_key_configured ? t("studylib.settings.configured") : t("studylib.settings.not_configured") %></strong><br/>
-        <%= password_field_tag "settings[google_books_api_key]", nil,
-              id: "google_books_api_key", autocomplete: "new-password", size: 48 %>
-        <p><%= t("studylib.settings.key_help") %></p>
-      </div>
-
-      <% if @google_books_key_configured %>
-        <div class="field">
-          <%= check_box_tag "settings[remove_google_books_api_key]", "1", false, id: "remove_google_books_api_key" %>
-          <%= label_tag "remove_google_books_api_key", t("studylib.settings.remove_key") %>
-        </div>
+<div class="column-fixed" id="col1">
+  <div class="portlet" id="studylib_cover_image">
+    <h2 class="title"><%= t("studylib.settings.cover_image") %></h2>
+    <div class="config_box">
+      <% if notice.present? %>
+        <p id="notice"><%= notice %></p>
+      <% end %>
+      <% if alert.present? %>
+        <p role="alert"><%= alert %></p>
       <% end %>
 
-      <div class="actions">
-        <%= submit_tag t("studylib.settings.save") %>
-      </div>
-    <% end %>
+      <ul>
+        <li>
+          <%= form_with scope: :settings, url: studylib_settings_path, method: :patch, local: true do %>
+            <%= label_tag "google_books_api_key", t("studylib.settings.google_books_api_key") %>
+            （<%= @google_books_key_configured ? t("studylib.settings.configured") : t("studylib.settings.not_configured") %>）
+            <br/>
+            <%= password_field_tag "settings[google_books_api_key]", nil,
+                  id: "google_books_api_key", autocomplete: "new-password", size: 48 %>
+            <p><%= t("studylib.settings.key_help") %></p>
 
-    <p>
-      <%= t("studylib.settings.current_setting") %>
-      <%= link_to t("studylib.settings.library_group_link"), library_group_path(@library_group) %>
-    </p>
+            <% if @google_books_key_configured %>
+              <%= check_box_tag "settings[remove_google_books_api_key]", "1", false, id: "remove_google_books_api_key" %>
+              <%= label_tag "remove_google_books_api_key", t("studylib.settings.remove_key") %>
+              <br/>
+            <% end %>
+
+            <%= submit_tag t("studylib.settings.save") %>
+          <% end %>
+        </li>
+        <li>
+          <%= t("studylib.settings.current_setting") %>
+          <%= link_to t("studylib.settings.library_group_link"), library_group_path(@library_group) %>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

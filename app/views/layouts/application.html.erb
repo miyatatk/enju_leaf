@@ -7,7 +7,7 @@
   <head>
     <meta charset="UTF-8"/>
     <%= render "page/include" %>
-    <title><%= title(controller.controller_name) %></title>
+    <title><%= controller.controller_path == "studylib/settings" ? "#{t("studylib.settings.title")} - #{LibraryGroup.system_name} - Next-L Enju Leaf" : title(controller.controller_name) %></title>
     <%- if controller.controller_name == 'manifestations' and controller.action_name == 'index' -%>
       <%= auto_discovery_link_tag(
         :rss,
