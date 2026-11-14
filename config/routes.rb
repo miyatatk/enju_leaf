@@ -154,6 +154,10 @@ Rails.application.routes.draw do
     resources :order_lists
   end
 
+  namespace :studylib do
+    resource :settings, only: :show
+  end
+
   devise_for :users
 
   get '/page/about' => 'page#about'

@@ -125,6 +125,9 @@
             <li><%= link_to t("activerecord.models.search_history"), search_histories_path %></li>
           <% end %>
           <li><%= link_to t("page.configuration"), page_configuration_path %></li>
+          <% if current_user.has_role?('Administrator') %>
+            <li><%= link_to t("studylib.settings.title"), studylib_settings_path %></li>
+          <% end %>
         </ul>
       </li>
     <% end %>

@@ -1,0 +1,14 @@
+<div id="content_detail" class="ui-corner-all ui-widget-content">
+  <h1 class="title"><%= t("studylib.settings.title") %></h1>
+
+  <div id="content_list">
+    <p><%= t("studylib.settings.introduction") %></p>
+
+    <h2><%= t("studylib.settings.cover_image") %></h2>
+    <p><%= t("studylib.settings.cover_image_pending") %></p>
+    <p>
+      <%= t("studylib.settings.current_setting") %>
+      <%= link_to t("studylib.settings.library_group_link"), library_group_path(@library_group) %>
+    </p>
+  </div>
+</div>
