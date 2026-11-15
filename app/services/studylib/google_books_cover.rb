@@ -61,15 +61,18 @@ module Studylib
       return nil unless info.is_a?(Hash)
 
       identifiers = Array(info["industryIdentifiers"])
-      return nil unless identifiers.any? { |entry| normalize_isbn(entry["identifier"]) == isbn }
+      return nil unless identifiers.any? { |entry| entry.is_a?(Hash) && normalize_isbn(entry["identifier"]) == isbn }
 
       image_links = info["imageLinks"] || {}
       url = image_links["thumbnail"] || image_links["smallThumbnail"]
       return nil unless url.is_a?(String)
 
       uri = URI.parse(url)
-      return nil unless uri.is_a?(URI::HTTPS) && ALLOWED_IMAGE_HOSTS.include?(uri.host) && uri.userinfo.nil?
+      return nil unless uri.is_a?(URI::HTTP) && ALLOWED_IMAGE_HOSTS.include?(uri.host) && uri.userinfo.nil?
 
+      # Google Books sometimes returns http: imageLinks; request the same host over HTTPS.
+      uri.scheme = "https"
+      uri.port = 443
       uri.to_s
     rescue URI::InvalidURIError
       nil
