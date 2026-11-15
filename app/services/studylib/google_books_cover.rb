@@ -57,6 +57,8 @@ module Studylib
     end
 
     def matched_cover(item, isbn)
+      return nil unless item.is_a?(Hash)
+
       info = item["volumeInfo"]
       return nil unless info.is_a?(Hash)
 
@@ -68,7 +70,7 @@ module Studylib
       return nil unless url.is_a?(String)
 
       uri = URI.parse(url)
-      return nil unless uri.is_a?(URI::HTTP) && ALLOWED_IMAGE_HOSTS.include?(uri.host) && uri.userinfo.nil?
+      return nil unless uri.is_a?(URI::HTTP) && ALLOWED_IMAGE_HOSTS.include?(uri.host) && uri.userinfo.nil? && uri.port.in?([ 80, 443 ])
 
       # Google Books sometimes returns http: imageLinks; request the same host over HTTPS.
       uri.scheme = "https"
