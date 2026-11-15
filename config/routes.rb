@@ -156,6 +156,7 @@ Rails.application.routes.draw do
 
   namespace :studylib do
     resource :settings, only: [ :show, :update ]
+    get "covers/:isbn", to: "covers#show", as: :cover
   end
 
   devise_for :users

@@ -1,8 +1,14 @@
 <% unless manifestation.isbn_records.empty? %>
-  <div id="gbsthumbnail<%= manifestation.id %>" class="book_jacket"></div>
-  <script type="text/javascript">
-    gbs_addTheCover( '<%= manifestation.isbn_records.first.body %>', 'gbsthumbnail<%= manifestation.id %>' );
-  </script>
+  <% if Studylib::GoogleBooksApiKey.new.configured? %>
+    <%= image_tag(studylib_cover_path(isbn: manifestation.isbn_records.first.body),
+                  alt: manifestation.original_title, class: "book_jacket", width: 100) %>
+    <div><%= link_to "Google Books", "https://books.google.com/", rel: "noopener noreferrer" %></div>
+  <% else %>
+    <div id="gbsthumbnail<%= manifestation.id %>" class="book_jacket"></div>
+    <script type="text/javascript">
+      gbs_addTheCover( '<%= manifestation.isbn_records.first.body %>', 'gbsthumbnail<%= manifestation.id %>' );
+    </script>
+  <% end %>
 <% else %>
   <% if @library_group.settings['book_jacket_unknown_resource'] %>
     <%= @library_group.settings['book_jacket_unknown_resource'] %>
