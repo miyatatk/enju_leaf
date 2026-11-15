@@ -33,7 +33,7 @@ RSpec.describe Studylib::GoogleBooksCover do
     stub = stub_books(status: 200, body: payload)
     url = described_class.new.image_url(isbn)
 
-    expect(url).to eq(image_url.sub("books.google.com/books", "books.google.com:443/books"))
+    expect(url).to eq(image_url)
     expect(url).not_to include(key)
     expect(stub).to have_been_requested.once
   end
